@@ -1,0 +1,22 @@
+[System.Serializable]
+public class Quest {
+    public string questName;
+    public string description;
+    public bool isCompleted;
+    public List<string> objectives;
+}
+
+public class QuestManager : MonoBehaviour {
+    public List<Quest> activeQuests;
+
+    public void CompleteObjective(string questName, string objective) {
+        Quest quest = activeQuests.Find(q => q.questName == questName);
+        if (quest != null && quest.objectives.Contains(objective)) {
+            quest.objectives.Remove(objective);
+            if (quest.objectives.Count == 0) {
+                quest.isCompleted = true;
+                Debug.Log($"Quest '{quest.questName}' completed!");
+            }
+        }
+    }
+}
